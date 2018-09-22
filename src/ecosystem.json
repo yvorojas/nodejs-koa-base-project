@@ -1,0 +1,14 @@
+
+{
+    "name" : "nodejs-koa-base-project",
+    "script" : "./src/app.js",
+    "watch" : false,
+    "env_develop": {
+        "NODE_ENV": "development",
+        "PORT": 8081
+    },
+    "env_production": {
+        "NODE_ENV": "production",
+        "PORT": 80
+    }
+}
