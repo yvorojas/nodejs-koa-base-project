@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-koa-base-project",
+  "version": "1.0.0",
+  "description": "nodejs + koa + swagger + swagger ui + joi + OAuth2 (JWT) base project",
+  "main": "index.js",
+  "repository": "https://github.com/yvorojas/nodejs-koa-base-project.git",
+  "author": "Yvo Rojas <yvo.rojas.valdes@gmail.com>",
+  "license": "MIT"
+}
