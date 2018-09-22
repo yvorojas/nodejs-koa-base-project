@@ -1,4 +1,5 @@
 const Router = require('koa-router');
+const apiSpecifications = require('./api-specs');
 const pkginfo = require('../package.json');
 const httpStatusCodes = require('http-status-codes');
 const routerV1 = require('./controllers/v1');
@@ -23,6 +24,10 @@ router.get('/health', (ctx) => {
 router.get('/', (ctx) => {
     ctx.redirect('/health');
     ctx.status = httpStatusCodes.PERMANENT_REDIRECT;
+});
+
+router.get('/specs', (ctx) => {
+  ctx.body = apiSpecifications.getSpec();
 });
 
 router.use(routerV1.routes());
