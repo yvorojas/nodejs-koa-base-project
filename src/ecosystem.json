@@ -5,10 +5,16 @@
     "watch" : false,
     "env_develop": {
         "NODE_ENV": "development",
-        "PORT": 8081
+        "PORT": 8081,
+        "PREFIX": "",
+        "SWAGGER_UI_ROUTE":"/explorer",
+        "SWAGGER_SPECS": "http://localhost:8081/specs"
     },
     "env_production": {
         "NODE_ENV": "production",
-        "PORT": 80
+        "PORT": 80,
+        "PREFIX": "",
+        "SWAGGER_UI_ROUTE":"/explorer",
+        "SWAGGER_SPECS": "http://localhost:80/specs"
     }
 }
