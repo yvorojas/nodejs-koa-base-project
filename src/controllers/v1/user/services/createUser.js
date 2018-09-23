@@ -1,9 +1,9 @@
 const userRepository = require('../repositories/users');
-const UserEntity = require('../../../../models/user/entities/newUser');
+const NewUserEntity = require('../../../../models/user/entities/newUser');
 
 const createUser = (user) => {
     try {
-        const userEntity = new UserEntity(
+        const newUserEntity = new NewUserEntity(
             user.name, 
             user.email, 
             user.password, 
@@ -11,7 +11,7 @@ const createUser = (user) => {
             user.phone, 
             user.documentId, 
             user.country);
-        userRepository.createUser(userEntity);
+        userRepository.createUser(newUserEntity);
         return 'USER CREATED CORRECTLY';
     } catch(err) {
         throw err;
