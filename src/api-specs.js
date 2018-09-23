@@ -26,6 +26,7 @@ let options = {
   // Path to the API specs
   apis: [
     path.join(__dirname, './controllers/**/*.js'),
+    path.join(__dirname, './models/**/**/*.js'),
   ],
 };
 

@@ -14,6 +14,18 @@ const app = new Koa();
 apiSpecifications.initialize();
 
 app
+    .use((ctx, next) => next().catch((err) => {
+        ctx.status = err.status;
+        switch (err.status) {
+        case 401:
+            ctx.body = 'Protected resource, use Authorization header to get access\n';
+            break;
+        default:
+            console.log(err);
+            ctx.body = err.message;
+            break;
+        }
+    }))
     .use(bodyParser())
     .use(cors({
         methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],

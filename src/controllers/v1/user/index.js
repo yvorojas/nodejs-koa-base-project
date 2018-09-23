@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const httpStatusCodes = require('http-status-codes');
 const services = require('./services');
+const ErrorHandler = require('../../../utils/errorHandler');
 
 /**
 * @swagger
@@ -30,7 +31,10 @@ const router = new Router({
  *       200:
  *          description: "user list"
  *          schema:
- *            type: string
+ *            type: array
+ *            items:
+ *               type: object
+ *               $ref: "#/definitions/User"
  *       500:
  *          description: "Internal Server Error"
  *          schema:
@@ -38,8 +42,13 @@ const router = new Router({
  */
 
 router.get('/', (ctx) => {
-    ctx.response.body = services.getUsers();
-    ctx.status = httpStatusCodes.OK;
+    try {
+        ctx.response.body = services.getUsers();
+        ctx.status = httpStatusCodes.OK;
+    } catch (err){
+        const errorHandler = new ErrorHandler(ctx, err);
+        errorHandler.throw();
+    }
 });
 
 /**
@@ -56,10 +65,12 @@ router.get('/', (ctx) => {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: quote
- *         description: "quote to obtain plans"
+ *       - name: user
+ *         description: "user to add"
  *         in:  body
  *         required: true
+ *         schema:
+ *           $ref: "#/definitions/NewUser"
  *     responses:
  *       201:
  *          description: "user added message"
@@ -72,8 +83,13 @@ router.get('/', (ctx) => {
  */
 
 router.post('/', (ctx)=>{
-    ctx.response.body = services.createUser(ctx.request.body);
-    ctx.status = httpStatusCodes.CREATED;
+    try {
+        ctx.response.body = services.createUser(ctx.request.body);
+        ctx.status = httpStatusCodes.CREATED;
+    } catch (err){
+        const errorHandler = new ErrorHandler(ctx, err);
+        errorHandler.throw();
+    }
 });
 
 module.exports = router;
