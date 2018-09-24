@@ -60,14 +60,14 @@ const Joi = BaseJoi
 
 // Limit country by schema to CL, PE, AR, CO
 const schema = Joi.object().keys({
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-    address: Joi.string().required(),
-    phone: Joi.string().required(),
-    documentId: Joi.string().required(),
-    country: Joi.string().valid(countries.getArrayOfValues()).required(),
-});
+    name: Joi.string().required().error(new Error('name is required.')),
+    email: Joi.string().email().required().error(new Error('Invalid email')),
+    password: Joi.string().required().error(new Error('password is required')),
+    address: Joi.string().required().error(new Error('address is required')),
+    phone: Joi.string().required().error(new Error('phone is required')),
+    documentId: Joi.string().required().error(new Error('document id is required')),
+    country: Joi.string().valid(countries.getArrayOfValues()).required().error(new Error('invalid country')),
+}).options({abortEarly: false});
 
 const user = class {
     constructor(name, email, password, address, phone, documentId, country){
@@ -95,12 +95,14 @@ const user = class {
         if (user){
             switch (user.country){
                 case 'CL':
-                    schema.documentId = Joi.string().rut().required()
+                    Object.assign(schema, schema.keys({
+                        documentId: Joi.string().rut().required()
+                    }));
                 break;
                 default:
                 break;
             }
-            return Joi.validate(user, schema, (err, value) => {
+            return schema.validate(user, {abortEarly: false}, (err, value) => {
                 if(err){
                     throw Error(err);
                 }
