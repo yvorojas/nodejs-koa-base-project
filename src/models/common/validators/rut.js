@@ -33,4 +33,6 @@ const calculateDv = (run) => {
     return true;
   };
 
-  module.exports = isRut();
+  module.exports = {
+    isRut
+  };
